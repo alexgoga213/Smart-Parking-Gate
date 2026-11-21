@@ -2,6 +2,8 @@
 
 > An **Arduino Uno** parking barrier with a **parking-assist sensor**. The buzzer beeps faster as the car gets closer, and the barrier opens only when a space is free. A safety sensor stops it from ever closing on a car. Free spaces are counted, shown on an LCD and kept in EEPROM across power cuts. The project runs in the **Wokwi** simulator, so no hardware is needed.
 
+### ▶ [Run it in the Wokwi simulator](https://wokwi.com/projects/481308607319625729)
+
 ![Arduino](https://img.shields.io/badge/Arduino-Uno-00878F?logo=arduino&logoColor=white)
 ![C++](https://img.shields.io/badge/C%2B%2B-non--blocking-00599C?logo=cplusplus&logoColor=white)
 ![Wokwi](https://img.shields.io/badge/simulated%20in-Wokwi-6b4fbb)
@@ -57,6 +59,8 @@ The complete wiring is in [`diagram.json`](diagram.json) (Wokwi format).
 - **Smooth servo motion:** 1° every 12 ms, about 1.1 s for a full stroke instead of a jump.
 
 ## Run it in Wokwi
+
+The quickest way is the [saved Wokwi project](https://wokwi.com/projects/481308607319625729): press ▶ and play. To build it yourself from this repository:
 
 1. Open [wokwi.com/projects/new/arduino-uno](https://wokwi.com/projects/new/arduino-uno).
 2. Replace the contents of `sketch.ino` and `diagram.json` with the files from this repository.
