@@ -1,0 +1,420 @@
+{
+  "version": 1,
+  "author": "Goga Alex-Andrei",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-uno",
+      "id": "uno",
+      "top": 130,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "sonarApproach",
+      "top": -40,
+      "left": -20,
+      "attrs": {
+        "distance": "400"
+      }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "sonarGate",
+      "top": -40,
+      "left": 200,
+      "attrs": {
+        "distance": "400"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "barrier",
+      "top": -10,
+      "left": 440,
+      "attrs": {
+        "hornColor": "#d62839"
+      }
+    },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd",
+      "top": 370,
+      "left": 0,
+      "attrs": {
+        "pins": "i2c"
+      }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "buzzer",
+      "top": 150,
+      "left": 470,
+      "attrs": {
+        "volume": "0.2"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledGreen",
+      "top": 150,
+      "left": 330,
+      "attrs": {
+        "color": "green",
+        "label": "far"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledYellow",
+      "top": 150,
+      "left": 370,
+      "attrs": {
+        "color": "yellow",
+        "label": "near"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledRed",
+      "top": 150,
+      "left": 410,
+      "attrs": {
+        "color": "red",
+        "label": "stop"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "lampRed",
+      "top": -40,
+      "left": 620,
+      "attrs": {
+        "color": "red",
+        "label": "gate"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "lampGreen",
+      "top": 10,
+      "left": 620,
+      "attrs": {
+        "color": "limegreen"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 225,
+      "left": 312,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 225,
+      "left": 352,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 225,
+      "left": 392,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r4",
+      "top": -14,
+      "left": 650,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r5",
+      "top": 36,
+      "left": 650,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btnExit",
+      "top": 390,
+      "left": 340,
+      "attrs": {
+        "color": "blue",
+        "label": "EXIT",
+        "bounce": "1"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btnManual",
+      "top": 390,
+      "left": 450,
+      "attrs": {
+        "color": "yellow",
+        "label": "MANUAL OPEN",
+        "bounce": "1"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btnReset",
+      "top": 390,
+      "left": 560,
+      "attrs": {
+        "color": "red",
+        "label": "RESET (hold 2 s)",
+        "bounce": "1"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "sonarApproach:VCC",
+      "uno:5V",
+      "red",
+      []
+    ],
+    [
+      "sonarApproach:GND",
+      "uno:GND.1",
+      "black",
+      []
+    ],
+    [
+      "sonarApproach:TRIG",
+      "uno:2",
+      "orange",
+      []
+    ],
+    [
+      "sonarApproach:ECHO",
+      "uno:3",
+      "purple",
+      []
+    ],
+    [
+      "sonarGate:VCC",
+      "uno:5V",
+      "red",
+      []
+    ],
+    [
+      "sonarGate:GND",
+      "uno:GND.1",
+      "black",
+      []
+    ],
+    [
+      "sonarGate:TRIG",
+      "uno:4",
+      "orange",
+      []
+    ],
+    [
+      "sonarGate:ECHO",
+      "uno:5",
+      "purple",
+      []
+    ],
+    [
+      "barrier:V+",
+      "uno:5V",
+      "red",
+      []
+    ],
+    [
+      "barrier:GND",
+      "uno:GND.1",
+      "black",
+      []
+    ],
+    [
+      "barrier:PWM",
+      "uno:9",
+      "green",
+      []
+    ],
+    [
+      "buzzer:2",
+      "uno:8",
+      "green",
+      []
+    ],
+    [
+      "buzzer:1",
+      "uno:GND.2",
+      "black",
+      []
+    ],
+    [
+      "uno:10",
+      "r1:1",
+      "green",
+      []
+    ],
+    [
+      "r1:2",
+      "ledGreen:A",
+      "green",
+      []
+    ],
+    [
+      "ledGreen:C",
+      "uno:GND.2",
+      "black",
+      []
+    ],
+    [
+      "uno:11",
+      "r2:1",
+      "gold",
+      []
+    ],
+    [
+      "r2:2",
+      "ledYellow:A",
+      "gold",
+      []
+    ],
+    [
+      "ledYellow:C",
+      "uno:GND.2",
+      "black",
+      []
+    ],
+    [
+      "uno:12",
+      "r3:1",
+      "red",
+      []
+    ],
+    [
+      "r3:2",
+      "ledRed:A",
+      "red",
+      []
+    ],
+    [
+      "ledRed:C",
+      "uno:GND.2",
+      "black",
+      []
+    ],
+    [
+      "uno:A1",
+      "r4:1",
+      "red",
+      []
+    ],
+    [
+      "r4:2",
+      "lampRed:A",
+      "red",
+      []
+    ],
+    [
+      "lampRed:C",
+      "uno:GND.3",
+      "black",
+      []
+    ],
+    [
+      "uno:A2",
+      "r5:1",
+      "green",
+      []
+    ],
+    [
+      "r5:2",
+      "lampGreen:A",
+      "green",
+      []
+    ],
+    [
+      "lampGreen:C",
+      "uno:GND.3",
+      "black",
+      []
+    ],
+    [
+      "btnExit:1.l",
+      "uno:6",
+      "blue",
+      []
+    ],
+    [
+      "btnExit:2.l",
+      "uno:GND.3",
+      "black",
+      []
+    ],
+    [
+      "btnManual:1.l",
+      "uno:7",
+      "gold",
+      []
+    ],
+    [
+      "btnManual:2.l",
+      "uno:GND.3",
+      "black",
+      []
+    ],
+    [
+      "btnReset:1.l",
+      "uno:A3",
+      "red",
+      []
+    ],
+    [
+      "btnReset:2.l",
+      "uno:GND.3",
+      "black",
+      []
+    ],
+    [
+      "lcd:GND",
+      "uno:GND.2",
+      "black",
+      []
+    ],
+    [
+      "lcd:VCC",
+      "uno:5V",
+      "red",
+      []
+    ],
+    [
+      "lcd:SDA",
+      "uno:A4",
+      "blue",
+      []
+    ],
+    [
+      "lcd:SCL",
+      "uno:A5",
+      "violet",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

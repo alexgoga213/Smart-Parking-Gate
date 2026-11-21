@@ -1,0 +1,5 @@
+# Wokwi for VS Code: build with PlatformIO or Arduino CLI, then press F1 > "Wokwi: Start Simulator"
+[wokwi]
+version = 1
+firmware = 'build/sketch.ino.hex'
+elf = 'build/sketch.ino.elf'

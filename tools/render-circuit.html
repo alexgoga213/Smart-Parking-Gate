@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Smart Parking Gate – circuit</title>
+<!-- Renders diagram.json with the open-source Wokwi part graphics (used for the README picture).
+     Serve the project folder (python -m http.server) and open tools/render-circuit.html -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@wokwi/elements@1.9.2/+esm"></script>
+<style>
+  body { margin: 0; background: #f4f5f6; font-family: system-ui, sans-serif; }
+  #board { position: relative; width: 820px; height: 640px; margin: 0 auto; }
+  #board > * { position: absolute; }
+  svg#wires { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+  .label { font: 600 12px system-ui, sans-serif; color: #2b3136; text-align: center; width: 120px; }
+</style>
+</head>
+<body>
+<div id="board"><svg id="wires"></svg></div>
+<script type="module">
+  const OFFSET = { x: 60, y: 80 };
+  const diagram = await (await fetch('../diagram.json')).json();
+  const board = document.getElementById('board');
+  const els = {};
+  for (const p of diagram.parts) {
+    const el = document.createElement(p.type);
+    for (const [k, v] of Object.entries(p.attrs || {})) el.setAttribute(k, v);
+    el.style.left = p.left + OFFSET.x + 'px';
+    el.style.top = p.top + OFFSET.y + 'px';
+    if (p.rotate) el.style.transform = `rotate(${p.rotate}deg)`;
+    board.appendChild(el);
+    els[p.id] = el;
+  }
+  await customElements.whenDefined('wokwi-arduino-uno');
+  await new Promise((r) => setTimeout(r, 400));
+
+  // a representative moment: car at 60 cm, barrier closed, 7 spaces free
+  els.ledYellow.value = true;
+  els.lampRed.value = true;
+  els.lcd.text = ' 7/10 free  SHUTDistance  60 cm ';
+  els.barrier.angle = 0;
+
+  const boardBox = board.getBoundingClientRect();
+  const pinXY = (ref) => {
+    const [id, pin] = ref.split(':');
+    const el = els[id];
+    const info = (el.pinInfo || []).find((p) => p.name === pin);
+    if (!info) return null;
+    const box = el.getBoundingClientRect();
+    // pinInfo is in the element's own (unrotated) coordinates
+    const w = el.offsetWidth, h = el.offsetHeight;
+    let x = info.x, y = info.y;
+    const rot = (diagram.parts.find((q) => q.id === id).rotate || 0) * Math.PI / 180;
+    if (rot) {
+      const cx = w / 2, cy = h / 2;
+      const dx = x - cx, dy = y - cy;
+      x = cx + dx * Math.cos(rot) - dy * Math.sin(rot);
+      y = cy + dx * Math.sin(rot) + dy * Math.cos(rot);
+      return { x: box.left - boardBox.left + (box.width - w) / 2 + x, y: box.top - boardBox.top + (box.height - h) / 2 + y };
+    }
+    return { x: box.left - boardBox.left + x, y: box.top - boardBox.top + y };
+  };
+  const svg = document.getElementById('wires');
+  let paths = '';
+  for (const [a, b, color] of diagram.connections) {
+    const p = pinXY(a), q = pinXY(b);
+    if (!p || !q) continue;
+    const midY = (p.y + q.y) / 2;
+    paths += `<path d="M${p.x} ${p.y} V${midY} H${q.x} V${q.y}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" opacity=".85"/>`;
+  }
+  svg.innerHTML = paths;
+  document.body.dataset.ready = '1';
+</script>
+</body>
+</html>
